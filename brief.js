@@ -78,6 +78,10 @@ const WHY = [
   "You came to build something that outlasts your name.",
   "You came to laugh at the right moments, and at the wrong ones.",
   "You came to understand the why — and then to let it go.",
+  "You came to be the calm one in the room.",
+  "You came to love a place, not just the people in it.",
+  "You came to learn that rest is not a reward.",
+  "You came to say the brave thing in a small voice.",
 ];
 
 const MAIN_QUESTS = [
@@ -89,6 +93,14 @@ const MAIN_QUESTS = [
   ["The Second Spring", "Begin something important after everyone assumes you are finished."],
   ["The Quiet Rebellion", "Refuse, gracefully, the life others designed for you."],
   ["The Gardener", "Plant things whose shade you will never sit in."],
+  ["The Translator", "Help two people who love each other finally understand what the other meant."],
+  ["The Keeper of Recipes", "Carry a family's food, songs or stories one generation further."],
+  ["The Late Bloom", "Discover, well after forty, the thing you were always meant to do."],
+  ["The Unbuilt Wall", "Break a pattern that has run through your family for at least three lives."],
+  ["The Ferryman", "Walk someone you love all the way to the edge of their life, and let them go."],
+  ["The Wanderer's Return", "Leave home far enough to see it, then come back and stay."],
+  ["The Small Republic", "Gather a handful of people who would cross a city for each other."],
+  ["The Mirror", "Be told the truth about yourself by a stranger, and believe it."],
 ];
 
 const SIDE_QUESTS = [
@@ -106,6 +118,18 @@ const SIDE_QUESTS = [
   ["Sing badly, in public, sober", "+7 pts"],
   ["Finish one thing you started in a previous decade", "+9 pts"],
   ["Sit with someone in silence until they're ready to speak", "+11 pts"],
+  ["Learn to make bread from scratch, then give the first loaf away", "+6 pts"],
+  ["Apologise to an animal you once misjudged", "+2 pts"],
+  ["Plant a tree you will not see grow up", "+8 pts"],
+  ["Go somewhere alone where nobody speaks your language", "+7 pts"],
+  ["Keep a plant alive for an entire year", "+4 pts"],
+  ["Tell a friend exactly why they matter to you", "+10 pts"],
+  ["Dance at a wedding before anyone else does", "+5 pts"],
+  ["Ask your oldest relative what they were like at your age", "+9 pts"],
+  ["Lose an argument gracefully", "+6 pts"],
+  ["Notice a dream, write it down and take it seriously", "+3 pts"],
+  ["Lend something you'd rather keep", "+5 pts"],
+  ["Stay up late enough to see the stars properly", "+3 pts"],
 ];
 
 const KPIS = [
@@ -119,6 +143,14 @@ const KPIS = [
   ["Hours spent being needlessly worried", "per week, max", [2, 4], true],
   ["Truths told when silence was easier", "per month", [1, 4]],
   ["Things made with your hands", "per season", [1, 4]],
+  ["Compliments given and meant", "per week", [4, 10]],
+  ["Coincidences noticed", "per month", [2, 7]],
+  ["Apologies that weren't needed", "per week, max", [1, 3], true],
+  ["Letters, calls or visits to the old", "per month", [2, 5]],
+  ["New things tried", "per season", [2, 6]],
+  ["Evenings with no screen at all", "per month", [3, 8]],
+  ["Times you asked for help", "per month", [1, 4]],
+  ["Meals eaten slowly, with company", "per week", [3, 7]],
 ];
 
 const OBSTACLES = [
@@ -142,6 +174,15 @@ const ACHIEVEMENTS = [
 ];
 
 const ARCHANGELS = ["Gabriel", "Raphael", "Michael"];
+
+// Souls the Bureau keeps a special file on. Half the time, one of these replaces the usual Why.
+const SPECIAL_SOULS = ["ruslana", "руслана", "veronique"];
+const SPECIAL_WHY = [
+  "You came to learn that you can be loved.",
+  "You came to learn not to apologise.",
+  "You came to wear a unicorn onesie.",
+];
+const fold = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
 const pick = (r, arr) => arr[Math.floor(r() * arr.length)];
 function pickN(r, arr, n) {
@@ -168,7 +209,11 @@ export function makeBrief(name) {
   const angel = pick(r, ANGELS);
   const trait = pick(r, ANGEL_TRAITS);
   const levers = pickN(r, LEVERS, 2 + Math.floor(r() * 2));
-  const why = pick(r, WHY);
+  let why = pick(r, WHY);
+  // A fresh coin each time the crank turns, so this half doesn't follow the name's seed.
+  if (SPECIAL_SOULS.includes(fold(clean)) && Math.random() < 0.5) {
+    why = SPECIAL_WHY[Math.floor(Math.random() * SPECIAL_WHY.length)];
+  }
   const [mqTitle, mqText] = pick(r, MAIN_QUESTS);
   const sides = pickN(r, SIDE_QUESTS, 4);
   const kpis = pickN(r, KPIS, 4);
