@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bureau of Incarnations</title>
+  <meta name="description" content="Wind the crank to receive the KPIs and quests your soul signed up for before this life. After Bernard Werber's The Empire of the Angels.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <header class="intro">
+    <p class="eyebrow">Department of Souls &middot; Records Office</p>
+    <h1>Bureau of Incarnations</h1>
+    <p class="lede">Before you arrived, you agreed to a brief. You simply forgot it.<br>Turn the crank to print your copy.</p>
+    <label class="soul">
+      <span>Name of the soul</span>
+      <input id="soul-name" type="text" autocomplete="off" spellcheck="false" placeholder="optional — same name, same brief">
+    </label>
+    <div class="controls top">
+      <button id="wind" type="button">Hold to wind</button>
+    </div>
+  </header>
+
+  <main class="stage" id="stage">
+    <canvas id="scene" aria-label="A white box with a brass crank on its side. Drag the crank in circles to print your brief."></canvas>
+    <div class="paper" id="paper" aria-live="polite">
+      <div class="paper-inner" id="paper-inner"></div>
+    </div>
+    <p class="hint" id="hint">Grab the crank and turn it</p>
+  </main>
+
+  <div class="controls">
+    <button id="tear" type="button" hidden>Tear off &amp; ask again</button>
+  </div>
+
+  <footer class="colophon">
+    After <a href="https://en.wikipedia.org/wiki/The_Empire_of_the_Angels"><cite>L'Empire des Anges</cite></a> by Bernard Werber.
+    For pastafarian-werberians everywhere.
+  </footer>
+
+  <script type="module" src="main.js"></script>
+</body>
+</html>
